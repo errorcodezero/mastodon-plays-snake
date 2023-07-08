@@ -1,0 +1,4 @@
+.venv/
+.env
+pytooter_usercred.secret
+__pycache__
