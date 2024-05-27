@@ -2,7 +2,7 @@ export type Square = "empty" | "snakeBody" | "snakeHead" | "food"
 export type Direction = [0,1] | [1,0] | [0,-1] | [-1, 0]
 export type Coord = [number, number];
 export const grid: Square[][] = [];
-export let snake: Coord[] = [[0,3], [1, 3], [2, 3]]
+export let snake: Coord[] = [[0, 2], [0, 3], [0, 4]]
 export let foodCoord: Coord = [3, 2];
 
 for(let i = 0; i<5; i++) {
@@ -10,26 +10,22 @@ for(let i = 0; i<5; i++) {
 }
 
 grid[foodCoord[0]][foodCoord[1]] = "food"
-
-for(let i = 0; i < snake.length; i++) {
-    if(i = 0) grid[snake[i][0]][snake[i][1]] = "snakeHead";
-    else grid[snake[i][0]][snake[i][1]] = "snakeBody";
-}
+grid[snake[0][0]][snake[0][1]] = "snakeHead";
+grid[snake[1][0]][snake[1][1]] = "snakeBody";
+grid[snake[2][0]][snake[2][1]] = "snakeBody";
 
 export function nextGridFrame(grid: Square[][], foodCoord: Coord, snake: Coord[], direction: Direction) {
-    const newGrid: Square[][] = [];
+    const newGrid: Square[][] = grid;
 
-    for(let i = 0; i<5; i++) {
-        newGrid.push(["empty", "empty", "empty", "empty", "empty"])
+    snake.unshift([snake[0][0] + direction[0], snake[0][1] + direction[1]])
+
+    newGrid[snake[0][0]][snake[0][1]] = "snakeHead";
+    for(let i = 1; i<snake.length; i++) {
+        newGrid[snake[i][0]][snake[i][1]] = "snakeBody";
     }
+    newGrid[snake[snake.length - 1][0]][snake[snake.length - 1][1]] = "empty"
 
-    snake.splice(0, 0, [snake[0][0] + direction[0], snake[0][1] + direction[1]])
-    snake.pop()
-
-    for (let i = 0; i<snake.length; i++) {
-        if(i = 0) newGrid[snake[i][0]][snake[i][1]] = "snakeHead";
-        else newGrid[snake[i][0]][snake[i][1]] = "snakeBody";
-    }
+    snake.pop();
 
     return newGrid;
 }

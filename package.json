@@ -7,7 +7,7 @@
     "build": "tsc --build" 
   },
   "keywords": [],
-  "author": "",
+  "author": "errorcodezero",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.12.12",
