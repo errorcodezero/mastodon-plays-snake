@@ -1,29 +1,9 @@
-import { createRestAPIClient } from "masto";
-import { grid, displayGrid, nextGridFrame, foodCoord, snake } from "./game.js";
+import Snake from "./game.js"
 
-let game = grid;
+const game = new Snake;
 
-// const masto = createRestAPIClient({
-//   url: String(process.env.URL),
-//   accessToken: String(process.env.TOKEN),
-// });
+console.log(game.getGrid() + "\n")
 
-// const status = await masto.v1.statuses.create({
-//  status: "",
-//  visibility: "private"
-// });
+game.next("up")
 
-// console.log(status.url)
-
-console.log(displayGrid(game));
-console.log("")
-game = nextGridFrame(game, foodCoord, snake, [1,0])
-console.log(displayGrid(game));
-console.log("")
-game = nextGridFrame(game, foodCoord, snake, [1,0])
-console.log(displayGrid(game));
-console.log("")
-game = nextGridFrame(game, foodCoord, snake, [1,0])
-console.log(displayGrid(game));
-console.log("")
-game = nextGridFrame(game, foodCoord, snake, [1,0])
+console.log(game.getGrid())

@@ -1,57 +1,71 @@
 export type Square = "empty" | "snakeBody" | "snakeHead" | "food"
-export type Direction = [0,1] | [1,0] | [0,-1] | [-1, 0]
+export type Direction = "up" | "down" | "left" | "right"
 export type Coord = [number, number];
-export const grid: Square[][] = [];
-export let snake: Coord[] = [[0, 2], [0, 3], [0, 4]]
-export let foodCoord: Coord = [3, 2];
 
-for(let i = 0; i<5; i++) {
-    grid.push(["empty", "empty", "empty", "empty", "empty"])
-}
+export default class Snake {
+  private readonly x: number = 5;
+  private readonly y: number = 5;
+  private grid: Square[][] = [];
+  private snake: Coord[] = [];
+  private food: Coord = [0, 0];
 
-grid[foodCoord[0]][foodCoord[1]] = "food"
-grid[snake[0][0]][snake[0][1]] = "snakeHead";
-grid[snake[1][0]][snake[1][1]] = "snakeBody";
-grid[snake[2][0]][snake[2][1]] = "snakeBody";
+  constructor() {
+    this.reset()
+  }
 
-export function nextGridFrame(grid: Square[][], foodCoord: Coord, snake: Coord[], direction: Direction) {
-    const newGrid: Square[][] = grid;
+  public reset() {
+    // Makes the entire grid empty
+    this.grid = []
+    for (let i = 0; i < this.x; i++) this.grid.push(Array(this.y).fill("empty", 0));
+    
+    // Place snake
+    this.snake = [[this.getRndWholeNumber(this.x - 1), this.getRndWholeNumber(this.y - 1)]]
+    this.grid[this.snake[0][0]][this.snake[0][1]] = "snakeHead"
 
-    snake.unshift([snake[0][0] + direction[0], snake[0][1] + direction[1]])
+    // Place food
+    this.placeFood();
+  }
 
-    newGrid[snake[0][0]][snake[0][1]] = "snakeHead";
-    for(let i = 1; i<snake.length; i++) {
-        newGrid[snake[i][0]][snake[i][1]] = "snakeBody";
+  private placeFood() {
+    let flag = true;
+    while (flag) {
+        this.food = [this.getRndWholeNumber(this.x), this.getRndWholeNumber(this.y)]
+        if (!this.snake.includes(this.food)) flag = false;
+        else if(this.snake.length === (this.x * this.y)) {
+            this.reset();
+            flag = false;
+        }
+        
+        this.grid[this.food[0]][this.food[1]] = "food"
     }
-    newGrid[snake[snake.length - 1][0]][snake[snake.length - 1][1]] = "empty"
+  }
 
-    snake.pop();
+  private getRndWholeNumber(max: number) {
+    return Math.floor(Math.random() * (max));
+  }
 
-    return newGrid;
-}
-
-export function displayGrid(grid: Square[][]) {
-    let gridString = "";
-    for(let i = 0; i<grid.length; i++) {
-        for(let j = 0; j<grid[i].length; j++) {
-            let gridChar = grid[i][j]
-            switch (gridChar) {
-                case "empty":
-                    gridString += "🟦";
+  public getGrid() {
+    let gridString = ""
+    for (let x = 0; x<this.x; x++) {
+        for (let y = 0; y<this.y; y++) {
+            switch (this.grid[x][y]) {
+                case "food":
+                    gridString += "🍎"
                     break;
-                case "snakeHead":
-                    gridString += "🟢";
+                case "empty":
+                    gridString += "🟦"
                     break;
                 case "snakeBody":
-                    gridString += "🟩";
+                    gridString += "🟩"
                     break;
-                case "food":
-                    gridString += "🍎";
+                case "snakeHead":
+                    gridString += "🟢"
                     break;
             }
         }
-        if (i!=(grid.length-1)) gridString += "\n";
+        if (x != (this.x - 1)) gridString += "\n";
     }
 
     return gridString;
+  }
 }
