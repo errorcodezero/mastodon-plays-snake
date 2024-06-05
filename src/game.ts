@@ -93,6 +93,6 @@ export default class Snake {
         this.grid[this.snake[i][1]][this.snake[i][0]] = "snakeBody"
     }
     this.grid[this.snake[this.snake.length - 1][1]][this.snake[this.snake.length - 1][0]] = "empty"
-    this.snake.pop();
+    if(this.snake[0][1] != this.food[1] || this.snake[0][0] != this.food[0]) this.snake.pop() && this.placeFood();
   }
 }
