@@ -4,6 +4,17 @@ const game = new Snake;
 
 console.log(game.getGrid() + "\n")
 
-game.move("right")
+import { createRestAPIClient } from "masto";
 
-console.log(game.getGrid() + "\n")
+const masto = createRestAPIClient({
+  url: process.env.URL,
+  accessToken: process.env.TOKEN,
+});
+
+const status = await masto.v1.statuses.create({
+  status: `${game.getGrid()}`,
+  poll: {
+    options: [...game.getPossibleMoves()],
+    expiresIn: 1800
+  }
+});

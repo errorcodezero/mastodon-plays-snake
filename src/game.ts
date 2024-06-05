@@ -105,4 +105,19 @@ export default class Snake {
         this.snake.pop();
     }
   }
+  
+  public getPossibleMoves() : Direction[] {
+    switch (this.currentDirection) {
+      case undefined:
+          return ["up", "down", "left", "right"]
+      case "up":
+          return ["left", "right"]
+      case "down":
+          return ["left", "right"]
+      case "left":
+          return ["up", "down"]
+      case "right":
+          return ["up", "down"]
+    }
+  }
 }
