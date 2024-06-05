@@ -1,20 +1,11 @@
-import Snake from "./game.js"
-
-const game = new Snake;
-
-console.log(game.getGrid() + "\n")
-
 import { createRestAPIClient } from "masto";
 
 const masto = createRestAPIClient({
-  url: process.env.URL,
+  url: String(process.env.URL),
   accessToken: process.env.TOKEN,
 });
 
-const status = await masto.v1.statuses.create({
-  status: `${game.getGrid()}`,
-  poll: {
-    options: [...game.getPossibleMoves()],
-    expiresIn: 1800
-  }
-});
+const user = await masto.v1.accounts.lookup({ acct: "@snake@botsin.space" })
+const lastStatus = await masto.v1.accounts.$select(user.id).statuses.list();
+
+console.log(lastStatus[0].content);

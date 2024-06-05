@@ -94,6 +94,10 @@ export default class Snake {
     }
 
     this.snake.unshift([this.snake[0][0] + changeX, this.snake[0][1] + changeY])
+    if (this.snake[0][1] === this.y || this.snake[0][0] === this.x || this.snake[0][1] === -1 || this.snake[0][0] === -1) { 
+        this.reset();
+        return;
+    };
     this.grid[this.snake[0][1]][this.snake[0][0]] = "snakeHead"
     for (let i = 1; i < this.snake.length; i++) {
         this.grid[this.snake[i][1]][this.snake[i][0]] = "snakeBody"
