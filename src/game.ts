@@ -8,6 +8,7 @@ export default class Snake {
   private grid: Square[][] = [];
   private snake: Coord[] = [];
   private food: Coord = [0, 0];
+  public currentDirection: Direction | undefined;
 
   constructor() {
     this.reset()
@@ -24,6 +25,9 @@ export default class Snake {
 
     // Place food
     this.placeFood();
+
+    // Reset current direction
+    this.currentDirection = undefined;
   }
 
   private placeFood() {
@@ -72,6 +76,8 @@ export default class Snake {
   public move(direction: Direction) {
     let changeX = 0;
     let changeY = 0;
+    this.currentDirection = direction;
+    // The changeX and changeY are kinda weird for this but this is the only way it works.
     switch(direction) {
       case "up":
         changeY -= 1;
