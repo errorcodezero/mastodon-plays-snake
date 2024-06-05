@@ -20,7 +20,7 @@ export default class Snake {
     
     // Place snake
     this.snake = [[this.getRndWholeNumber(this.x - 1), this.getRndWholeNumber(this.y - 1)]]
-    this.grid[this.snake[0][0]][this.snake[0][1]] = "snakeHead"
+    this.grid[this.snake[0][1]][this.snake[0][0]] = "snakeHead"
 
     // Place food
     this.placeFood();
@@ -36,7 +36,7 @@ export default class Snake {
             flag = false;
         }
         
-        this.grid[this.food[0]][this.food[1]] = "food"
+        this.grid[this.food[1]][this.food[0]] = "food"
     }
   }
 
@@ -67,5 +67,32 @@ export default class Snake {
     }
 
     return gridString;
+  }
+
+  public move(direction: Direction) {
+    let changeX = 0;
+    let changeY = 0;
+    switch(direction) {
+      case "up":
+        changeY -= 1;
+        break;
+      case "down":
+        changeY += 1;
+        break;
+      case "left":
+        changeX -= 1;
+        break;
+      case "right":
+        changeX += 1;
+        break;
+    }
+
+    this.snake.unshift([this.snake[0][0] + changeX, this.snake[0][1] + changeY])
+    this.grid[this.snake[0][1]][this.snake[0][0]] = "snakeHead"
+    for (let i = 1; i < this.snake.length; i++) {
+        this.grid[this.snake[i][1]][this.snake[i][0]] = "snakeBody"
+    }
+    this.grid[this.snake[this.snake.length - 1][1]][this.snake[this.snake.length - 1][0]] = "empty"
+    this.snake.pop();
   }
 }

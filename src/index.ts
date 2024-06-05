@@ -4,6 +4,6 @@ const game = new Snake;
 
 console.log(game.getGrid() + "\n")
 
-game.next("up")
+game.move("right")
 
-console.log(game.getGrid())
+console.log(game.getGrid() + "\n")
