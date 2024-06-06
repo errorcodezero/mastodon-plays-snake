@@ -17,7 +17,7 @@ async function postUpdate() {
     const status = await masto.v1.statuses.create({
         status: game.getGrid(),
         poll: {
-            expiresIn: 1740,
+            expiresIn: 1800,
             options: game.getPossibleMoves()
         },
     })
@@ -30,7 +30,7 @@ async function getMostVotedMove() {
     const statuses = await masto.v1.accounts.$select(user.id).statuses.list();
     const status = statuses[0];
     
-    if(!status.poll || !status.poll.expired) return null;
+    if(!status.poll) return null;
     let poll = []
     try {
         poll = <PollOption[]> status.poll.options;
@@ -52,7 +52,6 @@ setInterval(async () => {
     const newMove = await getMostVotedMove();
     if (!newMove) {
         game.reset();
-        await postUpdate();
     } else {
         game.move(newMove);
         await postUpdate();
