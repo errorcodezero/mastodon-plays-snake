@@ -3,8 +3,8 @@ export type Direction = "up" | "down" | "left" | "right"
 export type Coord = [number, number];
 
 export default class Snake {
-  private readonly x: number = 5;
-  private readonly y: number = 5;
+  private readonly x: number = 6;
+  private readonly y: number = 6;
   private grid: Square[][] = [];
   private snake: Coord[] = [];
   private food: Coord = [0, 0];
