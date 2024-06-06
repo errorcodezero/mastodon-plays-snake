@@ -30,7 +30,7 @@ async function getMostVotedMove() {
     const statuses = await masto.v1.accounts.$select(user.id).statuses.list();
     const status = statuses[0];
     
-    if(!status.poll) return null;
+    if(!status.poll || !status.poll.expired) return null;
     let poll = []
     try {
         poll = <PollOption[]> status.poll.options;
@@ -46,7 +46,6 @@ async function getMostVotedMove() {
     return poll[0].title;
 }
 
-await getMostVotedMove();
 await postUpdate();
 
 setInterval(async () => {
