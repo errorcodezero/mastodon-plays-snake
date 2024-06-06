@@ -51,9 +51,8 @@ if (!newMove) {
     game.reset();
 } else {
     game.move(newMove);
+    await postUpdate();
 }
-
-await postUpdate();
 
 setInterval(async () => {
     const newMove = await getMostVotedMove();
@@ -61,7 +60,6 @@ setInterval(async () => {
         game.reset();
     } else {
         game.move(newMove);
+        await postUpdate();
     }
-
-    await postUpdate();
 }, 1800000)
