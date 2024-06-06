@@ -46,13 +46,8 @@ async function getMostVotedMove() {
     return poll[0].title;
 }
 
-const newMove = await getMostVotedMove();
-if (!newMove) {
-    game.reset();
-} else {
-    game.move(newMove);
-    await postUpdate();
-}
+await getMostVotedMove();
+await postUpdate();
 
 setInterval(async () => {
     const newMove = await getMostVotedMove();
