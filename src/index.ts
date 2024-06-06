@@ -17,7 +17,7 @@ async function postUpdate() {
     const status = await masto.v1.statuses.create({
         status: game.getGrid(),
         poll: {
-            expiresIn: 1800,
+            expiresIn: 1740,
             options: game.getPossibleMoves()
         },
     })
@@ -52,6 +52,7 @@ setInterval(async () => {
     const newMove = await getMostVotedMove();
     if (!newMove) {
         game.reset();
+        await postUpdate();
     } else {
         game.move(newMove);
         await postUpdate();
