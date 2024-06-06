@@ -94,7 +94,7 @@ export default class Snake {
     }
 
     this.snake.unshift([this.snake[0][0] + changeX, this.snake[0][1] + changeY])
-    if (this.snake[0][1] === this.y || this.snake[0][0] === this.x || this.snake[0][1] === -1 || this.snake[0][0] === -1) { 
+    if (this.snake[0][1] === this.y || this.snake[0][0] === this.x || this.snake[0][1] === -1 || this.snake[0][0] === -1 || this.snake.length != new Set(this.snake).size) { 
         this.reset();
         return;
     };
@@ -102,26 +102,27 @@ export default class Snake {
     for (let i = 1; i < this.snake.length; i++) {
         this.grid[this.snake[i][1]][this.snake[i][0]] = "snakeBody"
     }
-    this.grid[this.snake[this.snake.length - 1][1]][this.snake[this.snake.length - 1][0]] = "empty"
     if(this.snake[0][1] === this.food[1] && this.snake[0][0] === this.food[0]) {
         this.placeFood();
     } else {
+        this.grid[this.snake[this.snake.length - 1][1]][this.snake[this.snake.length - 1][0]] = "empty"
         this.snake.pop();
     }
   }
   
   public getPossibleMoves() : Direction[] {
+    if (this.snake.length === 1) return ["up", "left", "right", "down"];
     switch (this.currentDirection) {
       case undefined:
-          return ["up", "down", "left", "right"]
+          return ["up", "left", "right", "down"]
       case "up":
-          return ["left", "right"]
+          return ["up", "left", "right"]
       case "down":
-          return ["left", "right"]
+          return ["left", "right", "down"]
       case "left":
-          return ["up", "down"]
+          return ["up", "left", "down"]
       case "right":
-          return ["up", "down"]
+          return ["up", "right", "down"]
     }
   }
 }
