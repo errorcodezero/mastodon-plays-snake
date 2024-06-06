@@ -97,16 +97,17 @@ export default class Snake {
     if (this.snake[0][1] === this.y || this.snake[0][0] === this.x || this.snake[0][1] === -1 || this.snake[0][0] === -1 || this.snake.length != new Set(this.snake).size) { 
         this.reset();
         return;
-    };
-    this.grid[this.snake[0][1]][this.snake[0][0]] = "snakeHead"
-    for (let i = 1; i < this.snake.length; i++) {
-        this.grid[this.snake[i][1]][this.snake[i][0]] = "snakeBody"
-    }
-    if(this.snake[0][1] === this.food[1] && this.snake[0][0] === this.food[0]) {
+    } else if(this.snake[0][1] === this.food[1] && this.snake[0][0] === this.food[0]) {
+        this.grid[this.snake[0][1]][this.snake[0][0]] = "snakeHead"
         this.placeFood();
     } else {
+        this.grid[this.snake[0][1]][this.snake[0][0]] = "snakeHead"
         this.grid[this.snake[this.snake.length - 1][1]][this.snake[this.snake.length - 1][0]] = "empty"
         this.snake.pop();
+    }
+
+    for (let i = 1; i<this.snake.length; i++) {
+        this.grid[this.snake[i][1]][this.snake[i][0]] = "snakeBody"
     }
   }
   
