@@ -4,7 +4,7 @@ A simple mastodon bot that lets you play snake on mastodon as a community. This 
 
 ## Rehosting
 
-> **Note**
+> [!Note]
 > Make sure to run `pnpm run setup` so that the fields for the account are setup properly.
 
 Rehosting the bot is fine but please avoid just rehosting it without making your own changes or a unique twist on the game.
