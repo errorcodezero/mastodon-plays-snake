@@ -12,6 +12,7 @@ const masto = createRestAPIClient({
   accessToken: process.env.TOKEN,
 });
 const game = new Snake;
+const user = await masto.v1.accounts.lookup({ acct: "@snake@botsin.space" })
 
 async function postUpdate() {
     const status = await masto.v1.statuses.create({
@@ -26,7 +27,6 @@ async function postUpdate() {
 }
 
 async function getMostVotedMove() {
-    const user = await masto.v1.accounts.lookup({ acct: "@snake@botsin.space" })
     const statuses = await masto.v1.accounts.$select(user.id).statuses.list();
     const status = statuses[0];
     
@@ -55,5 +55,12 @@ setInterval(async () => {
     } else {
         game.move(newMove);
         await postUpdate();
+        const userDetails = await masto.v1.accounts.$select(user.id).fetch();
+        let highScore = 0;
+        highScore = Number(userDetails.fields[0])
+
+        if (highScore < game.getScore()) {
+            await masto.v1.accounts.updateCredentials({ fieldsAttributes: [{ name: "High Score", value: String(game.getScore()) }, { name: "Updates", value: "Every 30 Minutes" }, { name: "ErrorCode0 Website", value: "https://www.errorcodezero.dev" }, { name: "Github", value: "https://github.com/errorcodezero/mastodon-plays-snake" }] });
+        }
     }
 }, 1800000)

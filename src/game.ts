@@ -73,6 +73,10 @@ export default class Snake {
     return gridString;
   }
 
+  public getScore() {
+    return this.snake.length;
+  }
+
   public move(direction: Direction) {
     let changeX = 0;
     let changeY = 0;
