@@ -63,4 +63,4 @@ setInterval(async () => {
             await masto.v1.accounts.updateCredentials({ fieldsAttributes: [{ name: "High Score", value: String(game.getScore()) }, { name: "Updates", value: "Every 30 Minutes" }, { name: "ErrorCode0 Website", value: "https://www.errorcodezero.dev" }, { name: "Github", value: "https://github.com/errorcodezero/mastodon-plays-snake" }] });
         }
     }
-}, 20000)
+}, 1800000)
