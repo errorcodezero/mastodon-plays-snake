@@ -33,7 +33,7 @@ export default class Snake {
   private placeFood() {
     let flag = true;
     while (flag) {
-        this.food = [this.getRndWholeNumber(this.y), this.getRndWholeNumber(this.x)]
+        this.food = [this.getRndWholeNumber(this.x - 1), this.getRndWholeNumber(this.y - 1)]
         if (!this.snake.includes(this.food)) flag = false;
         else if(this.snake.length === (this.x * this.y)) {
             this.reset();
@@ -98,7 +98,7 @@ export default class Snake {
     }
 
     this.snake.unshift([this.snake[0][0] + changeX, this.snake[0][1] + changeY])
-    if (this.snake[0][1] === this.y || this.snake[0][0] === this.x || this.snake[0][1] === -1 || this.snake[0][0] === -1 || this.snake.length != new Set(this.snake).size) { 
+    if (this.snake[0][1] === this.y || this.snake[0][0] === this.x || this.snake[0][1] === -1 || this.snake[0][0] === -1 || (this.snake.length != new Set(this.snake).size)) { 
         this.reset();
         return;
     } else if(this.snake[0][1] === this.food[1] && this.snake[0][0] === this.food[0]) {
