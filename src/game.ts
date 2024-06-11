@@ -34,7 +34,7 @@ export default class Snake {
     let flag = true;
     while (flag) {
         this.food = [this.getRndWholeNumber(this.x - 1), this.getRndWholeNumber(this.y - 1)]
-        if (!this.snake.includes(this.food)) flag = false;
+        if (this.snake.includes(this.food)) flag = true;
         else if(this.snake.length === (this.x * this.y)) {
             this.reset();
             flag = false;
